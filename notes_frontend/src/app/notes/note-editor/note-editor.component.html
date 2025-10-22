@@ -1,0 +1,15 @@
+<div class="editor card" *ngIf="note; else empty">
+  <div class="editor-top">
+    <input class="input title-input" [value]="title" (input)="onTitleInput($any($event.target)?.value ?? '')" placeholder="Title" aria-label="Note title" />
+    <div class="timestamps" aria-live="polite">
+      <span>Updated {{ note.updatedAt | date:'short' }}</span>
+    </div>
+  </div>
+  <textarea class="textarea content-input" [value]="content" (input)="onContentInput($any($event.target)?.value ?? '')" placeholder="Write your note (markdown friendly)..." aria-label="Note content"></textarea>
+</div>
+
+<ng-template #empty>
+  <div class="empty card">
+    <p>Select or create a note to start editing.</p>
+  </div>
+</ng-template>

@@ -1,0 +1,40 @@
+<div class="list-root">
+  <div class="list-actions">
+    <input
+      class="input"
+      type="search"
+      [value]="search"
+      (input)="onInput($any($event.target)?.value ?? '')"
+      placeholder="Search notes"
+      aria-label="Search notes" />
+    <button class="btn" (click)="create.emit()" aria-label="Create new note">+ New</button>
+  </div>
+
+  <hr class="hr-soft"/>
+
+  <div class="list-scroll">
+    <button
+      class="list-item"
+      [class.active]="n.id === activeId"
+      *ngFor="let n of notes; trackBy: trackById"
+      (click)="select.emit(n.id)"
+      aria-label="Open note">
+      <div class="title" [innerHTML]="n.title | highlight:search"></div>
+      <div class="meta">{{ formatTime(n.updatedAt) }}</div>
+      <div class="snippet" [innerHTML]="snippet(n.content) | highlight:search"></div>
+      <button class="btn ghost danger" (click)="$event.stopPropagation(); openConfirm(n.id)" aria-label="Delete note">Delete</button>
+    </button>
+    <div class="empty" *ngIf="notes.length === 0">
+      No notes found. Click "New" to create one.
+    </div>
+  </div>
+</div>
+
+<app-confirm-dialog
+  [open]="confirmOpen"
+  title="Delete note"
+  message="This action cannot be undone."
+  confirmText="Delete"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelConfirm()">
+</app-confirm-dialog>

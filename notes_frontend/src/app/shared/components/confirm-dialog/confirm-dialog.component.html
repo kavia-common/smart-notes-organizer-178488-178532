@@ -1,0 +1,12 @@
+<div class="backdrop" *ngIf="open" aria-modal="true" role="dialog" aria-labelledby="confirm-title">
+  <div class="dialog card" role="document">
+    <h3 id="confirm-title">{{ title }}</h3>
+    <p class="message">{{ message }}</p>
+    <div class="actions">
+      <button class="btn ghost" (click)="close()" aria-label="Cancel">{{ cancelText }}</button>
+      <button class="btn" style="background: var(--color-error)" (click)="confirm()" aria-label="Confirm delete">
+        {{ confirmText }}
+      </button>
+    </div>
+  </div>
+</div>
